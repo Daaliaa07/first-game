@@ -1481,6 +1481,8 @@ function draw() {
 
 // ==================== حلقة اللعبة الرئيسية ====================
 function gameLoop() {
+     if (movingLeft) player.x -= 5;
+    if (movingRight) player.x += 5;
     if (!gamePaused && !gameOver) {
         update();
         draw();
@@ -1652,3 +1654,19 @@ for (let i = 0; i < 20; i++) {
 startScreen.style.display = 'flex';
 
 console.log('🎮 اللعبة جاهزة للتشغيل مع نظام السكورات!');
+
+
+const leftBtn = document.getElementById('leftBtn');
+const rightBtn = document.getElementById('rightBtn');
+const jumpBtn = document.getElementById('jumpBtn');
+
+let movingLeft = false;
+let movingRight = false;
+
+leftBtn.addEventListener('touchstart', () => movingLeft = true);
+leftBtn.addEventListener('touchend', () => movingLeft = false);
+
+rightBtn.addEventListener('touchstart', () => movingRight = true);
+rightBtn.addEventListener('touchend', () => movingRight = false);
+
+jumpBtn.addEventListener('touchstart', () => player.jump());
