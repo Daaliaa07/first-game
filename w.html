@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ar">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>جمع النقاط</title>
+    <link rel="stylesheet" href="w.css">
+</head>
+
+
+
+<body>
+    <div id="gameWrap">
+        <!-- شاشة البداية -->
+        <div id="startScreen">
+            <h1>مرحباً بك في لعبة غامبول</h1>
+            <button id="playBtn">اللعب</button>
+            <button id="viewScoresBtn">🏆 السكورات</button>
+        </div>
+
+        <!-- شاشة اختيار عدد اللاعبين -->
+        <div id="playerSelectScreen">
+            <h2>اختر عدد اللاعبين</h2>
+            <div class="buttonChoice" data-players="1">لاعب واحد</div>
+            <div class="buttonChoice" data-players="2">لاعبان</div>
+        </div>
+
+        <!-- شاشة اختيار الشخصية -->
+        <div id="charSelectScreen">
+            <h2>اختر شخصية اللاعب <span id="currentPlayer">1</span></h2>
+            <div style="display:flex; gap:20px; margin-top:20px; flex-wrap: wrap; justify-content: center;">
+                <div class="charBox gumball">
+                    <div class="charOption" data-char="gumball" style="background-image:url('gumball.png')"></div>
+                    <div class="charName">غامبول</div>
+                </div>
+                <div class="charBox darwin">
+                    <div class="charOption" data-char="darwin" style="background-image:url('darwin.png')"></div>
+                    <div class="charName">داروين</div>
+                </div>
+                <div class="charBox anais">
+                    <div class="charOption" data-char="anais" style="background-image:url('anais.png')"></div>
+                    <div class="charName">أنايس</div>
+                </div>
+                <div class="charBox nicole">
+                    <div class="charOption" data-char="nicole" style="background-image:url('nicole.png')"></div>
+                    <div class="charName">نيكول</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- شاشة الإيقاف -->
+        <div id="pauseScreen">
+            <h1>⏸️ اللعبة متوقفة</h1>
+            <div style="display:flex; gap:20px; margin-bottom:40px; flex-wrap: wrap; justify-content: center;">
+                <button id="resumeBtn">▶️ استئناف</button>
+                <button id="restartFromPauseBtn">🔄 إعادة تشغيل</button>
+                <button id="mainMenuBtn">🏠 القائمة الرئيسية</button>
+            </div>
+            <div style="background:rgba(255,255,255,0.1); padding:20px; border-radius:15px; text-align:center; max-width: 90%; margin: 0 20px;">
+                <h3>🎮 عناصر التحكم:</h3>
+                <p>👤 اللاعب 1: الأسهم (← → ↑)</p>
+                <p>👥 اللاعب 2: Q - D - Z</p>
+                <p>⏸️ إيقاف/استئناف: زرEspace</p>
+
+            </div>
+        </div>
+
+        <!-- شاشة السكورات -->
+        <div id="scoresScreen">
+            <h1>🏆 أعلى النقاط 🏆</h1>
+
+            <div id="scoresContainer"></div>
+
+            <div class="scoresButtons">
+                <button id="clearScoresBtn">🗑️ مسح السكورات</button>
+                <button id="backFromScoresBtn">↩️ العودة</button>
+            </div>
+        </div>
+
+
+        <header>
+            <h1>مرحبا بك في عائلة واتيرسون</h1>
+            <div class="controls">
+                <div class="stat" id="player1Stats">
+                    <div class="playerName">اللاعب 1: <span id="name1">---</span></div>
+                    <div class="score">نقاط: <span id="score1">0</span></div>
+                    <div class="lives">حياة: <span id="lives1">10</span></div>
+                </div>
+                <div class="stat" id="player2Stats" style="display:none;">
+                    <div class="playerName">اللاعب 2: <span id="name2">---</span></div>
+                    <div class="score">نقاط: <span id="score2">0</span></div>
+                    <div class="lives">حياة: <span id="lives2">10</span></div>
+                </div>
+                <div id="stageTitle" style="background:linear-gradient(135deg, #6a11cb, #2575fc);color:white;padding:8px 20px;border-radius:10px;font-size:18px;font-weight:bold;margin-right:10px;">
+                    المرحلة 1: الحديقة المائية
+                </div>
+
+                <!-- الأزرار الجديدة -->
+                <button id="pauseBtn" style="background:linear-gradient(135deg, #ff9900, #ff6600);">
+                     ⏸️إيقاف
+                </button>
+                <button id="backToMenuBtn" style="background:linear-gradient(135deg, #6666ff, #3333cc);">
+                    ↩️ القائمة
+                </button>
+                <button id="restartBtn">🔄 إعادة تشغيل</button>
+            </div>
+        </header>
+
+        <canvas id="game" width="860" height="480"></canvas>
+
+        <!-- شاشة نهاية اللعبة -->
+        <div id="gameOverScreen">
+            <h1>انتهت اللعبة</h1>
+            <div id="finalScores"></div>
+            <div id="highScoreMessage" style="font-size: 24px; color: #ffcc00; margin: 20px 0;"></div>
+            <button id="restartGameOverBtn">🔄 إعادة تشغيل</button>
+            <button id="backToMenuFromGameOver" style="background:#6666ff; margin-top:10px;">🏠 القائمة الرئيسية</button>
+            <button id="viewScoresFromGameOver" style="background:#ffcc00; color:#000; margin-top:10px;">🏆 عرض السكورات</button>
+        </div>
+
+    </div>
+
+    <script src="w.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,772 @@
+                   :root {
+                      --panel: rgba(255, 255, 255, 0.18);
+                      --font: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                  }
+                  /* ================= RESET ================= */
+                  
+                  * {
+                      box-sizing: border-box;
+                  }
+                  
+                  html,
+                  body {
+                      height: 100%;
+                      margin: 0;
+                      font-family: var(--font);
+                      background: linear-gradient(#7ec0ff, #2a94ff);
+                      overflow: hidden;
+                  }
+                  /* ================= WRAPPER ================= */
+                  
+                  #gameWrap {
+                      max-width: 1000px;
+                      height: 100%;
+                      margin: auto;
+                      display: flex;
+                      flex-direction: column;
+                      background: var(--panel);
+                      border-radius: 14px;
+                      overflow: hidden;
+                  }
+                  /* ================= START SCREEN ================= */
+                  
+                  #startScreen {
+                      position: fixed;
+                      inset: 0;
+                      background: url("a1.jpg") center/cover no-repeat;
+                      display: flex;
+                      flex-direction: column;
+                      justify-content: center;
+                      align-items: center;
+                      z-index: 999;
+                  }
+                  
+                  #startScreen h1 {
+                      font-size: 46px;
+                      color: #fff;
+                      text-shadow: 0 0 20px #000;
+                      margin-bottom: 30px;
+                  }
+                  
+                  #playBtn,
+                  #viewScoresBtn {
+                      width: 220px;
+                      padding: 16px;
+                      margin: 10px;
+                      font-size: 22px;
+                      border-radius: 20px;
+                      border: none;
+                      cursor: pointer;
+                      transition: 0.3s;
+                  }
+                  
+                  #playBtn {
+                      background: linear-gradient(135deg, #ff006a, #ff4dd2);
+                      color: #fff;
+                  }
+                  
+                  #viewScoresBtn {
+                      background: linear-gradient(135deg, #00cc66, #009933);
+                      color: #fff;
+                  }
+                  
+                  #playBtn:hover,
+                  #viewScoresBtn:hover {
+                      transform: scale(1.08);
+                  }
+                  /* ================= HEADER ================= */
+                  
+                  header {
+                      display: grid;
+                      grid-template-columns: auto 1fr auto;
+                      align-items: center;
+                      padding: 12px 20px;
+                      background: rgba(255, 255, 255, 0.15);
+                      backdrop-filter: blur(6px);
+                  }
+                  
+                  header h1 {
+                      font-size: 18px;
+                      color: #ff0077;
+                  }
+                  /* ================= CONTROLS ================= */
+                  
+                  .controls {
+                      display: flex;
+                      gap: 10px;
+                      justify-content: center;
+                  }
+                  
+                  .stat {
+                      background: linear-gradient(135deg, #8e2de2, #4a00e0);
+                      color: #fff;
+                      padding: 6px 12px;
+                      border-radius: 10px;
+                      font-size: 14px;
+                      min-width: 120px;
+                      text-align: center;
+                  }
+                  
+                  .playerName {
+                      font-weight: bold;
+                  }
+                  /* ================= HEADER BUTTONS ================= */
+                  
+                  header button {
+                      padding: 8px 14px;
+                      border-radius: 10px;
+                      font-size: 14px;
+                      border: none;
+                      cursor: pointer;
+                      background: linear-gradient(135deg, #ff9800, #ff5722);
+                      color: #fff;
+                      transition: 0.2s;
+                  }
+                  
+                  header button:hover {
+                      transform: scale(1.05);
+                  }
+                  /* ================= CANVAS ================= */
+                  
+                  canvas {
+                      flex: 1;
+                      width: 100%;
+                      background: linear-gradient(#cce9ff, #9fd1ff);
+                      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.15);
+                  }
+                  /* ================= SCREENS ================= */
+                  /* جميع الشاشات الأخرى مخفية افتراضياً */
+                  
+                  #playerSelectScreen,
+                  #charSelectScreen,
+                  #pauseScreen {
+                      position: fixed;
+                      inset: 0;
+                      display: none;
+                      /* تبقى مخفية في البداية */
+                      justify-content: center;
+                      align-items: center;
+                      flex-direction: column;
+                      background: rgba(0, 0, 0, 0.85);
+                      backdrop-filter: blur(8px);
+                      color: #fff;
+                      z-index: 200;
+                      text-align: center;
+                      animation: pauseFadeIn 0.5s ease forwards;
+                  }
+                  
+                  #pauseScreen h1 {
+                      font-size: 64px;
+                      color: #ff0055;
+                      text-shadow: 0 0 15px #ff66aa, 0 0 30px #ff0099;
+                      margin-bottom: 30px;
+                      animation: pulseText 1.2s infinite alternate;
+                  }
+                  
+                  #pauseScreen button {
+                      margin: 10px;
+                      padding: 16px 40px;
+                      font-size: 22px;
+                      border-radius: 16px;
+                      border: none;
+                      cursor: pointer;
+                      color: #fff;
+                      background: linear-gradient(135deg, #ff0066, #ff33aa);
+                      box-shadow: 0 8px 20px rgba(255, 0, 102, 0.6);
+                      transition: transform 0.3s, box-shadow 0.3s;
+                  }
+                  
+                  #pauseScreen button:hover {
+                      transform: scale(1.1);
+                      box-shadow: 0 12px 30px rgba(255, 0, 102, 0.8);
+                  }
+                  
+                  @keyframes pauseFadeIn {
+                      from {
+                          opacity: 0;
+                          transform: scale(0.95);
+                      }
+                      to {
+                          opacity: 1;
+                          transform: scale(1);
+                      }
+                  }
+                  
+                  @keyframes pulseText {
+                      0% {
+                          text-shadow: 0 0 10px #ff66aa, 0 0 20px #ff0099;
+                      }
+                      50% {
+                          text-shadow: 0 0 20px #ff66aa, 0 0 40px #ff0099;
+                      }
+                      100% {
+                          text-shadow: 0 0 10px #ff66aa, 0 0 20px #ff0099;
+                      }
+                  }
+                  /* ================= شاشة السكورات ================= */
+                  
+                  #scoresScreen {
+                      position: fixed;
+                      inset: 0;
+                      display: none;
+                      /* مخفية افتراضياً */
+                      flex-direction: column;
+                      justify-content: center;
+                      align-items: center;
+                      background: linear-gradient(135deg, rgba(0, 0, 30, 0.95), rgba(20, 20, 60, 0.95));
+                      backdrop-filter: blur(10px);
+                      color: #fff;
+                      z-index: 9999;
+                      padding: 0px 20px;
+                      overflow-y: auto;
+                      text-align: center;
+                      animation: fadeInScreen 0.5s ease forwards;
+                      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                  }
+                  /* عنوان السكورات */
+                  
+                  #scoresScreen h1 {
+                      font-size: 66px;
+                      color: #ffd700;
+                      text-shadow: 0 0 15px #ffd700, 0 0 30px #ff8c00, 0 0 45px #ff6a00;
+                      margin-bottom: 40px;
+                      animation: glowText 1.5s infinite alternate;
+                  }
+                  /* صندوق السكورات */
+                  
+                  #scoresContainer {
+                      width: 200%;
+                      max-width: 500px;
+                      background: rgba(255, 255, 255, 0.05);
+                      border-radius: 25px;
+                      padding: 0px;
+                      box-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
+                      backdrop-filter: blur(6px);
+                  }
+                  /* عنصر النقاط */
+                  
+                  .scoreItem {
+                      display: flex;
+                      justify-content: space-between;
+                      align-items: center;
+                      background: linear-gradient(120deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.12));
+                      padding: 18px 25px;
+                      margin: 12px 0;
+                      border-radius: 20px;
+                      font-size: 20px;
+                      font-weight: bold;
+                      color: #fff;
+                      transition: all 0.3s ease;
+                      position: relative;
+                      overflow: hidden;
+                      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+                  }
+                  
+                  .scoreItem:hover {
+                      transform: scale(1.04);
+                      box-shadow: 0 0 35px rgba(255, 215, 0, 0.6);
+                  }
+                  /* ترتيب النقاط */
+                  
+                  .scoreRank {
+                      font-size: 28px;
+                      color: #ffd700;
+                      min-width: 50px;
+                      text-shadow: 0 0 8px #ffd700;
+                  }
+                  
+                  .scorePlayer {
+                      color: #00ffff;
+                      font-weight: bold;
+                      text-shadow: 0 0 8px #00ffff;
+                  }
+                  
+                  .scoreValue {
+                      color: #ff6b6b;
+                      font-size: 24px;
+                      font-weight: bold;
+                      min-width: 80px;
+                      text-align: right;
+                  }
+                  /* أزرار السكورات */
+                  
+                  #scoresScreen .scoresButtons {
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      gap: 25px;
+                      margin-top: 40px;
+                      flex-wrap: wrap;
+                  }
+                  /* الأزرار الأساسية */
+                  /* ================= أزرار السكورات الفخمة ================= */
+                  /* ================= أزرار السكورات الفخمة ================= */
+                  
+                  #scoresScreen .scoresButtons button {
+                      position: relative;
+                      overflow: hidden;
+                      border: none;
+                      cursor: pointer;
+                      padding: 18px 60px;
+                      font-size: 24px;
+                      font-weight: bold;
+                      border-radius: 35px;
+                      color: #fff;
+                      text-transform: uppercase;
+                      letter-spacing: 1.2px;
+                      transition: all 0.4s ease, box-shadow 0.4s ease;
+                      background: linear-gradient(135deg, #ffb347, #ffcc33, #ff6a00);
+                      background-size: 200% 200%;
+                      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4), 0 0 10px rgba(255, 255, 255, 0.15) inset;
+                  }
+                  /* تحريك التدرج عند المرور */
+                  
+                  #scoresScreen .scoresButtons button:hover {
+                      transform: scale(1.15) rotate(-1deg);
+                      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(255, 255, 255, 0.25) inset;
+                      background-position: right center;
+                  }
+                  /* تأثير لمعان متحرك */
+                  
+                  #scoresScreen .scoresButtons button::before {
+                      content: "";
+                      position: absolute;
+                      top: -50%;
+                      left: -50%;
+                      width: 200%;
+                      height: 200%;
+                      background: rgba(255, 255, 255, 0.25);
+                      transform: rotate(45deg) translateX(-100%);
+                      transition: all 0.6s ease;
+                      pointer-events: none;
+                  }
+                  
+                  #scoresScreen .scoresButtons button:hover::before {
+                      transform: rotate(45deg) translateX(200%);
+                  }
+                  /* تأثير الضغط */
+                  
+                  #scoresScreen .scoresButtons button:active {
+                      transform: scale(0.95);
+                      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5) inset;
+                  }
+                  /* زر العودة */
+                  
+                  #backFromScoresBtn {
+                      background: linear-gradient(145deg, #00f0ff, #0072ff);
+                      color: #fff;
+                      text-shadow: 0 0 10px #00f0ff;
+                  }
+                  /* زر مسح السكورات */
+                  
+                  #clearScoresBtn {
+                      background: linear-gradient(145deg, #ff004c, #ff66aa);
+                      color: #fff;
+                      text-shadow: 0 0 10px #ff004c;
+                  }
+                  
+                  #clearScoresBtn:hover {
+                      transform: scale(1.15);
+                      box-shadow: 0 12px 50px rgba(255, 0, 51, 0.9);
+                  }
+                  /* تأثير ضوئي متحرك على الأزرار */
+                  
+                  #scoresScreen .scoresButtons button::before {
+                      content: "";
+                      position: absolute;
+                      top: -50%;
+                      left: -50%;
+                      width: 200%;
+                      height: 200%;
+                      background: rgba(255, 255, 255, 0.15);
+                      transform: rotate(45deg);
+                      transition: all 0.5s ease;
+                      pointer-events: none;
+                  }
+                  
+                  #scoresScreen .scoresButtons button:hover::before {
+                      top: -25%;
+                      left: -25%;
+                  }
+                  /* تأثير الضغط */
+                  
+                  #scoresScreen .scoresButtons button:active {
+                      transform: scale(0.95);
+                      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+                  }
+                  /* تأثير ظهور الشاشة */
+                  
+                  @keyframes fadeInScreen {
+                      from {
+                          opacity: 0;
+                          transform: scale(0.95);
+                      }
+                      to {
+                          opacity: 1;
+                          transform: scale(1);
+                      }
+                  }
+                  /* تأثير توهج النص */
+                  
+                  @keyframes glowText {
+                      0% {
+                          text-shadow: 0 0 15px #ffd700, 0 0 30px #ff8c00, 0 0 45px #ff6a00;
+                      }
+                      50% {
+                          text-shadow: 0 0 30px #ffd700, 0 0 60px #ff8c00, 0 0 90px #ff4500;
+                      }
+                      100% {
+                          text-shadow: 0 0 15px #ffd700, 0 0 30px #ff8c00, 0 0 45px #ff6a00;
+                      }
+                  }
+                  /* ================= PLAYER SELECT SCREEN ================= */
+                  
+                  #playerSelectScreen {
+                      background: url('a1.jpg') center/cover no-repeat;
+                      background-size: cover;
+                      animation: bgPulseSelect 3s ease-in-out infinite alternate;
+                      filter: brightness(1) contrast(1.2);
+                      text-align: center;
+                      z-index: 20;
+                  }
+                  
+                  #playerSelectScreen h2 {
+                      font-size: 48px;
+                      color: #fffb00;
+                      text-shadow: 0 0 12px #593fff;
+                      margin-bottom: 40px;
+                  }
+                  
+                  #playerSelectScreen .buttonChoicesContainer {
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      gap: 25px;
+                      flex-wrap: wrap;
+                  }
+                  
+                  .buttonChoice {
+                      background: linear-gradient(135deg, #fbff00, #fe0188);
+                      color: white;
+                      border: none;
+                      padding: 14px 30px;
+                      border-radius: 30px;
+                      font-size: 22px;
+                      font-weight: bold;
+                      cursor: pointer;
+                      margin-bottom: 30px;
+                      box-shadow: 0 4px 15px rgba(255, 0, 140, 0.6);
+                      transition: transform 0.3s ease;
+                      min-width: 150px;
+                  }
+                  
+                  .buttonChoice:hover {
+                      transform: scale(1.1);
+                      box-shadow: 0 8px 28px rgba(255, 0, 140, 0.8);
+                  }
+                  
+                  .buttonChoice img {
+                      width: 60px;
+                      height: 60px;
+                      margin-bottom: 10px;
+                      border-radius: 50%;
+                      border: 3px solid #fff;
+                      transition: transform 0.3s ease, box-shadow 0.3s ease;
+                  }
+                  
+                  .buttonChoice:hover img {
+                      transform: scale(1.2);
+                      box-shadow: 0 0 12px rgb(255, 0, 0);
+                  }
+                  
+                  .buttonChoice.selected {
+                      animation: pickPulse 0.4s ease-out;
+                      border: 2px solid #fc0202;
+                  }
+                  /* ================= CHARACTER SELECT SCREEN ================= */
+                  
+                  #charSelectScreen {
+                      background: linear-gradient(135deg, #f0f8ff, #a0c4ff);
+                      color: #0c0c0c;
+                      text-align: center;
+                  }
+                  
+                  #charSelectScreen h2 {
+                      font-size: 42px;
+                      margin-bottom: 30px;
+                      color: #ff0066;
+                      text-shadow: 0 0 8px #ff66a3;
+                  }
+                  
+                  #charSelectScreen .charContainer {
+                      display: flex;
+                      flex-wrap: wrap;
+                      gap: 20px;
+                      justify-content: center;
+                  }
+                  
+                  .charBox {
+                      display: flex;
+                      flex-direction: column;
+                      align-items: center;
+                      cursor: pointer;
+                      transition: transform 0.3s, box-shadow 0.3s;
+                      border-radius: 12px;
+                      padding: 10px;
+                      background: rgba(255, 255, 255, 0.1);
+                  }
+                  
+                  .charBox:hover {
+                      transform: scale(1.1);
+                      box-shadow: 0 0 20px rgba(255, 0, 102, 0.7);
+                  }
+                  
+                  .charOption {
+                      width: 140px;
+                      height: 140px;
+                      background-size: cover;
+                      border-radius: 12px;
+                      border: 3px solid transparent;
+                      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+                  }
+                  
+                  .charOption:hover {
+                      transform: scale(1.05);
+                      border-color: #ff0066;
+                  }
+                  
+                  .charName {
+                      margin-top: 10px;
+                      font-size: 18px;
+                      font-weight: bold;
+                      color: #333;
+                  }
+                  
+                  .charBox.selected .charOption {
+                      border-color: #ff0066;
+                      box-shadow: 0 0 15px #ff0066;
+                      animation: selectedPulse 0.6s infinite alternate;
+                  }
+                  /* ================= KEYFRAMES ================= */
+                  
+                  @keyframes pickPulse {
+                      0% {
+                          transform: scale(1);
+                          box-shadow: 0 0 0 transparent;
+                      }
+                      50% {
+                          transform: scale(1.3);
+                          box-shadow: 0 0 25px rgba(255, 0, 0, 0.9);
+                      }
+                      100% {
+                          transform: scale(1);
+                          box-shadow: 0 0 0 transparent;
+                      }
+                  }
+                  
+                  @keyframes selectedPulse {
+                      0% {
+                          transform: scale(1);
+                      }
+                      50% {
+                          transform: scale(1.15);
+                      }
+                      100% {
+                          transform: scale(1);
+                      }
+                  }
+                  
+                  @keyframes bgPulseSelect {
+                      0% {
+                          transform: scale(1);
+                      }
+                      50% {
+                          transform: scale(1.02);
+                      }
+                      100% {
+                          transform: scale(1);
+                      }
+                  }
+                  /* ================= RESPONSIVE ================= */
+                  
+                  @media (max-width: 768px) {
+                      #playerSelectScreen h2 {
+                          font-size: 32px;
+                          margin-bottom: 20px;
+                      }
+                      #playerSelectScreen .buttonChoicesContainer {
+                          flex-direction: column;
+                          gap: 15px;
+                      }
+                      .buttonChoice {
+                          width: 70%;
+                          font-size: 20px;
+                          padding: 12px 18px;
+                      }
+                      .buttonChoice img {
+                          width: 50px;
+                          height: 50px;
+                      }
+                      #charSelectScreen h2 {
+                          font-size: 28px;
+                      }
+                      .charOption {
+                          width: 100px;
+                          height: 100px;
+                      }
+                      .charName {
+                          font-size: 16px;
+                      }
+                      .charBox {
+                          padding: 6px;
+                      }
+                      #charSelectScreen .charContainer {
+                          gap: 15px;
+                      }
+                      header {
+                          grid-template-columns: 1fr;
+                          gap: 10px;
+                          text-align: center;
+                      }
+                      .controls {
+                          flex-wrap: wrap;
+                      }
+                      canvas {
+                          border-radius: 0;
+                      }
+                  }
+                  /* ================= GAME OVER SCREEN ================= */
+                  /*=============== شاشة نهاية اللعبة ===============*/
+                  
+                  #gameOverScreen {
+                      position: fixed;
+                      inset: 0;
+                      display: none;
+                      flex-direction: column;
+                      justify-content: center;
+                      align-items: center;
+                      background: rgba(0, 0, 0, 0.9);
+                      color: #fff;
+                      z-index: 40;
+                      text-align: center;
+                      gap: 10px;
+                      opacity: 0;
+                      transition: opacity 1s ease;
+                  }
+                  
+                  #gameOverScreen.show {
+                      display: flex;
+                      opacity: 1;
+                  }
+                  
+                  #gameOverScreen h1 {
+                      font-size: 48px;
+                      margin: 0;
+                      color: #ff5555;
+                      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+                  }
+                  
+                  #gameOverScreen button {
+                      background: #009dff;
+                      padding: 12px 28px;
+                      border-radius: 12px;
+                      color: #fff;
+                      font-size: 20px;
+                      cursor: pointer;
+                      border: none;
+                      font-weight: bold;
+                      transition: 0.3s;
+                      margin: 5px;
+                  }
+                  
+                  #gameOverScreen button:hover {
+                      background: #2a8cd6;
+                      transform: scale(1.05);
+                  }
+                  
+                  #gameOverScreen .gameOverButtons {
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      gap: 20px;
+                      flex-wrap: nowrap;
+                  }
+                  /*=============== Media Queries للشاشات الصغيرة ===============*/
+                  
+                  @media (max-width: 768px) {
+                      #startScreen .buttonsContainer,
+                      #playerSelectScreen .buttonChoicesContainer,
+                      #pauseScreen .pauseButtons,
+                      #scoresScreen .scoresButtons,
+                      #gameOverScreen .gameOverButtons {
+                          flex-direction: column;
+                          gap: 13px;
+                      }
+                      #playBtn,
+                      #viewScoresBtn,
+                      .buttonChoice {
+                          width: 80%;
+                          min-width: unset;
+                      }
+                  }
+                  
+                  @media (max-height: 600px) {
+                      #startScreen h1 {
+                          font-size: 28px;
+                          margin-bottom: 20px;
+                      }
+                      #playBtn {
+                          padding: 12px 30px;
+                          font-size: 20px;
+                      }
+                  }
+                  /* ================= TOP 3 EFFECTS ================= */
+                  
+                  .scoreItem.gold {
+                      background: linear-gradient(135deg, #ff4400, #ffb700);
+                      color: #000;
+                      box-shadow: 0 0 35px #ffd700;
+                      animation: glowGold 1.5s infinite alternate;
+                  }
+                  
+                  .scoreItem.silver {
+                      background: linear-gradient(135deg, #d9d9d9, #a8a8a8);
+                      color: #000;
+                      box-shadow: 0 0 25px #c0c0c0;
+                  }
+                  
+                  .scoreItem.bronze {
+                      background: linear-gradient(135deg, #cd7f32, #b87333);
+                      color: #000;
+                      box-shadow: 0 0 25px #cd7f32;
+                  }
+                  /* 👑 تاج للمركز الأول */
+                  
+                  .scoreItem.best::after {
+                      content: "👑";
+                      position: absolute;
+                      top: -20px;
+                      right: -20px;
+                      font-size: 36px;
+                      animation: crownBounce 1s infinite alternate;
+                  }
+                  /* توهج الذهب */
+                  
+                  @keyframes glowGold {
+                      from {
+                          box-shadow: 0 0 20px #ffd700;
+                      }
+                      to {
+                          box-shadow: 0 0 50px #ffd700;
+                      }
+                  }
+                  /* حركة التاج */
+                  
+                  @keyframes crownBounce {
+                      from {
+                          transform: translateY(0);
+                      }
+                      to {
+                          transform: translateY(-8px);
+                      }
+                  }
